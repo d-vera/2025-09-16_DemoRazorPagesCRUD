@@ -1,0 +1,18 @@
+﻿@page
+@model DemoRazorPages.Pages.OficinaSucursalEditModel
+@{
+}
+<h2>Editar Oficina Sucursal</h2>
+<form method="post">
+	<div class="card-group">
+		<label>Nombre:</label>
+		<input asp-for="@Model.Nombre" type="text" class="form-control" required />
+	</div>
+	<div class="card-group">
+		<label>Dirección:</label>
+		<input asp-for="@Model.Direccion" type="text" class="form-control" required />
+	</div>
+	<input class=" btn btn-primary" type="submit" value="Guardar" />
+	<a asp-page="OficinaSucursal" class="btn btn-secondary">Volver</a>
+
+</form>

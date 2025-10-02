@@ -1,0 +1,37 @@
+﻿@page
+@model DemoRazorPages.Pages.OficinaSucursalModel
+@{
+}
+<h2>Oficina Sucursal</h2>
+<br />
+
+<a asp-page="OficinaSucursalCreate" class="btn-primary btn">Nueva Oficina</a>
+<table class="table">
+	<thead>
+		<tr>	
+			<th>Oficina</th>
+			<th>Direccion</th>
+			<th>Fecha de Creación</th>
+			<th>Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (System.Data.DataRow row in Model.Resultado.Rows)
+		{
+			<tr>
+				<td>@row["nombre"]</td>
+				<td>@row["direccion"]</td>
+				<td>@row["fechaRegistro"]</td>
+				<td>
+					<a asp-page="OficinaSucursalEdit" asp-route-id="@row["id"]" class="btn-warning btn-sm btn">Editar</a>
+					<a class="btn-warning btn-sm btn">Eliminar</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="4">@Model.Resultado.Rows.Count Registros encontrados</td>
+		</tr>
+	</tfoot>
+</table>

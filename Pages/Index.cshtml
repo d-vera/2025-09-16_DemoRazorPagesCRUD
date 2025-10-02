@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <ul>
+        <li>Elemento1</li>
+        <li>Elemento2</li>
+        <li>Elemento10</li>
+    </ul> *@
+   
+    @Model.Mensaje
+    <br>
+   
+    @(Model.Mensaje+$" El número es: {Model.Numero}")
+
+    @if (Model.Numero>10)
+    {
+        <p>Es un número mayor a 10</p>
+    }
+    else
+    {
+           <p>No Es un número mayor a 10</p> 
+    }
+
+    <ul>
+        @for (int i = 0; i <= 10; i++)
+        {
+            <li>Elemento @i</li>
+        }
+        
+    </ul>
+
+</div>

@@ -7,25 +7,24 @@ namespace DemoRazorPages.Pages
 {
     public class OficinaSucursalEditModel : PageModel
     {
-        private readonly IConfiguration configuracion;
+        private readonly string cadenaConexion;
         [BindProperty]
-        public byte Id { get; set; }
+        public int Id { get; set; }
         [BindProperty]
         public string Nombre { get; set; }
         [BindProperty]
         public string Direccion { get; set; }
         public OficinaSucursalEditModel(IConfiguration config)
         {
-            this.configuracion = config;
+            this.cadenaConexion = config.GetConnectionString("MySqlConnection");
         }
         public void OnGet(int id)
         {
-            string cadenaConexion = configuracion.GetConnectionString("MySqlConnection");
             string query = @"SELECT id, nombre, direccion
                                 FROM oficina
                                 WHERE id=@id
-                                ORDER BY 2";
-            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                                ORDER BY nombre";
+            using (MySqlConnection conexion = new MySqlConnection(this.cadenaConexion))
             {
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 comando.Parameters.AddWithValue("@id", id);
@@ -33,9 +32,10 @@ namespace DemoRazorPages.Pages
                 MySqlDataAdapter adapter = new MySqlDataAdapter(comando);
                 DataTable tabla = new DataTable();
                 adapter.Fill(tabla);
+
                 if (tabla.Rows.Count > 0)
                 {
-                    this.Id = byte.Parse(tabla.Rows[0][0].ToString());
+                    this.Id = id;
                     this.Nombre = tabla.Rows[0][1].ToString();
                     this.Direccion = tabla.Rows[0][2].ToString();                   
                 }
@@ -43,8 +43,6 @@ namespace DemoRazorPages.Pages
         }
         public IActionResult OnPost()
         {
-            string cadenaConexion = configuracion.GetConnectionString("MySqlConnection");
-
             string query = @"UPDATE oficina SET nombre = @nombre,direccion = @direccion, fechaRegistro=current_timestamp 
                             WHERE id = @id;";
 

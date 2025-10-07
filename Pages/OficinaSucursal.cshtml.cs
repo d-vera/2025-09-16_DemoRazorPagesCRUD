@@ -8,13 +8,14 @@ namespace DemoRazorPages.Pages
 {
     public class OficinaSucursalModel : PageModel
     {
-        private readonly IConfiguration configuracion;
+        
+        private readonly string cadenaConexion;
         public DataTable Resultado { get; set; } = new DataTable();
-        private string cadenaConexion = "";
+        
         public OficinaSucursalModel(IConfiguration config)
         {
-            configuracion = config;
-            cadenaConexion = configuracion.GetConnectionString("MySqlConnection");
+            
+            this.cadenaConexion = config.GetConnectionString("MySqlConnection");
         }
         public void OnGet()
         {
@@ -25,7 +26,7 @@ namespace DemoRazorPages.Pages
             string consulta = @"SELECT id, nombre, direccion, fechaRegistro
                                 FROM oficina
                                 WHERE estado=1
-                                ORDER BY 2";
+                                ORDER BY nombre";
             //string cadenaConexion = configuracion.GetConnectionString("MySqlConnection");
             using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
             {
